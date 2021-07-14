@@ -36,7 +36,6 @@ namespace Asteroids.MoveSystems
                 }
                 
                 _rigidbody.velocity = _newVelocity;
-                Debug.Log(_rigidbody.velocity.magnitude);
             }
         }
     }

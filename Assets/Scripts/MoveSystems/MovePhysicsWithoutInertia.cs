@@ -17,8 +17,6 @@ namespace Asteroids.MoveSystems
 
         public void Move(float deltaTime, float horizontal, float vertical, float acceleration, float maxVelocity)
         {
-            //_rigidbody.velocity = (_transform.up * vertical * acceleration * deltaTime);
-
             if (vertical > 0 && _newVelocity.magnitude <= maxVelocity)
             {
                 Vector2 v0 = _rigidbody.velocity;

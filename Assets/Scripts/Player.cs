@@ -5,6 +5,7 @@ using System.ComponentModel;
 using Asteroids.Input;
 using Asteroids.MoveSystems;
 using Asteroids.RotateSystems;
+using Asteroids.WeaponSystems;
 using UnityEngine;
 
 namespace Asteroids
@@ -15,6 +16,7 @@ namespace Asteroids
         [SerializeField] private float _maxSpeed;
         [SerializeField] private float _rotationSpeed;
         [SerializeField] private float _acceleration;
+        [SerializeField] private Weapon _weapon;
         private IInput _input;
         private IMove _move;
         private IRotate _rotate;
@@ -24,10 +26,16 @@ namespace Asteroids
             _input = new InputAbstractFactory().Create(InputType.KeyBoard);
             _input.OnAxisChange += Move;
             _input.OnAxisChange += Rotate;
+            _input.OnKeyPressed += _weapon.Fire;
             var rigidBody = GetComponent<Rigidbody2D>();
             _move = new MovePhysicsWithInertia(rigidBody);
             _rotate = new RotateByPhysics(rigidBody);
 
+        }
+
+        private void Update()
+        {
+            _input.UpdateExecute();
         }
 
         private void FixedUpdate()
