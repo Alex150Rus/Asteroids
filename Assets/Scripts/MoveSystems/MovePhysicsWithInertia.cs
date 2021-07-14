@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Asteroids
+namespace Asteroids.MoveSystems
 {
     public class MovePhysicsWithInertia : IMove
     {

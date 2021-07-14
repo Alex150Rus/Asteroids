@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Asteroids.Input;
+using Asteroids.MoveSystems;
+using Asteroids.RotateSystems;
 using UnityEngine;
 
 namespace Asteroids

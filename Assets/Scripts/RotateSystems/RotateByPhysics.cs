@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Asteroids
+namespace Asteroids.RotateSystems
 {
     public class RotateByPhysics: IRotate
     {
