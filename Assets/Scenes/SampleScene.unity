@@ -225,6 +225,7 @@ MonoBehaviour:
   _maxSpeed: 1.25
   _rotationSpeed: 300
   _acceleration: 1.25
+  _weapon: {fileID: 677559494}
 --- !u!50 &499238269
 Rigidbody2D:
   serializedVersion: 4
@@ -452,6 +453,7 @@ GameObject:
   - component: {fileID: 677559491}
   - component: {fileID: 677559492}
   - component: {fileID: 677559493}
+  - component: {fileID: 677559494}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -541,6 +543,18 @@ CapsuleCollider2D:
   m_Offset: {x: -0.000000014961005, y: 0.04295548}
   m_Size: {x: 0.162505, y: 0.07499283}
   m_Direction: 0
+--- !u!114 &677559494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677559490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a0d05c790743714dbf93fc3e7786ac3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &703668869
 GameObject:
   m_ObjectHideFlags: 0
