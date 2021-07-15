@@ -7,6 +7,7 @@ namespace Asteroids.AsteroidSystems
         public Asteroid Create()
         {
             var asteroid = Resources.Load<Asteroid>("prefabs/asteroidMiddle");
+            asteroid.asteroidType = AsteroidType.Middle;
             var asteroidInstance = GameObject.Instantiate(asteroid);
             return asteroidInstance;
         }

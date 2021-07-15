@@ -8,7 +8,6 @@ namespace Asteroids.Common
         private float _screenHeight;
         private Vector2 _startPosition;
         private float _distance;
-        private float _everyFrameDistance;
 
         public ScreenBorderSystem(Transform transform)
         {
@@ -46,8 +45,7 @@ namespace Asteroids.Common
 
         public void SetObjectToStartingState()
         {
-        _distance = 0f;
-        _everyFrameDistance = 0f;
+            _distance = 0f;
         }
 
         public void SetStartingPosition(Transform transform)
