@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Asteroids.Common;
 using Asteroids.Input;
 using Asteroids.MoveSystems;
 using Asteroids.RotateSystems;
@@ -20,6 +21,7 @@ namespace Asteroids
         private IInput _input;
         private IMove _move;
         private IRotate _rotate;
+        private PlayerScreenBorderWork _playerScreenBorderWork;
 
         private void Awake()
         {
@@ -31,11 +33,14 @@ namespace Asteroids
             _move = new MovePhysicsWithInertia(rigidBody);
             _rotate = new RotateByPhysics(rigidBody);
 
+            _playerScreenBorderWork = new PlayerScreenBorderWork();
+
         }
 
         private void Update()
         {
             _input.UpdateExecute();
+            _playerScreenBorderWork.ScreenBorderWork(transform);
         }
 
         private void FixedUpdate()
