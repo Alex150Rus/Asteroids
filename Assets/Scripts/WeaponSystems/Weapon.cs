@@ -10,7 +10,7 @@ namespace Asteroids.WeaponSystems
     {
         private IAmmoCounter _ammoCounter;
         private AmmoPool _ammoPool;
-        
+
         private void Awake()
         {
             _ammoCounter = new AmmoCounter(1);
@@ -21,8 +21,9 @@ namespace Asteroids.WeaponSystems
         {
             if (commandReceived && _ammoCounter.IsProperTimeForFire())
             {
-                _ammoPool.GetOneAmmo(AmmoType.Green).Fly();
-                Debug.Log("Fire");
+                var ammo = _ammoPool.GetOneAmmo(AmmoType.Green); 
+                ammo.Fly();
+                ammo.OnScreenBorder += _ammoPool.ReturnObjectToPool;
             }
         }
     }

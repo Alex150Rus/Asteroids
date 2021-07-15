@@ -65,6 +65,13 @@ namespace Asteroids.Ammo
             transform.gameObject.SetActive(false);
             transform.SetParent(_rootPool);
         }
+        
+        public void ReturnObjectToPool(Transform transform)
+        {
+            transform.localPosition = Vector3.zero;
+            transform.localRotation = Quaternion.identity;
+            transform.gameObject.SetActive(false);
+        }
 
         public void RemovePool()
         {
