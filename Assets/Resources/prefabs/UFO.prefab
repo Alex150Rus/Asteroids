@@ -241,7 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _percentageOfBorderMargin: 20
-  _timeBetweenSpawn: 21
+  _timeBetweenSpawn: 35
   _weaponUfo: {fileID: 8665693256880213002}
 --- !u!50 &8665693257046218968
 Rigidbody2D:

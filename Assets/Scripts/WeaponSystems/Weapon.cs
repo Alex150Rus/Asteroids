@@ -11,6 +11,8 @@ namespace Asteroids.WeaponSystems
         private IAmmoCounter _ammoCounter;
         private AmmoPool _ammoPool;
         private ScoreSystem _scoreSystem;
+        
+        public ScoreSystem ScoreSystem => _scoreSystem;
 
         private void Awake()
         {
@@ -24,10 +26,10 @@ namespace Asteroids.WeaponSystems
             if (commandReceived && _ammoCounter.IsProperTimeForFire())
             {
                 var ammo = _ammoPool.GetOneAmmo(AmmoType.Green); 
+                ammo.OnTargetDestroyed += _scoreSystem.AddPoints;
                 ammo.Fly();
                 ammo.OnScreenBorder += _ammoPool.ReturnObjectToPool;
                 ammo.OnTargetReached += _ammoPool.ReturnObjectToPool;
-                ammo.OnTargetDestroyed += _scoreSystem.AddPoints;
             }
         }
     }

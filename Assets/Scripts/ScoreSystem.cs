@@ -18,7 +18,6 @@ namespace Asteroids
             {
                 _points += value;
                 OnPointsUpdate?.Invoke(_points);
-                Debug.Log(_points);
             }
         }
 

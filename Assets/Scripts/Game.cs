@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Asteroids.AsteroidSystems;
+using Asteroids.UI;
+using Asteroids.WeaponSystems;
 using UnityEngine;
 
 namespace Asteroids
@@ -12,6 +14,8 @@ namespace Asteroids
         [SerializeField] private int _waitSecondsBetweenAsteroidWaves;
         [SerializeField] private float _angleOfNewAsteroids;
         [SerializeField] private UFO.UFO _ufo;
+        [SerializeField] private Hud _hud;
+        [SerializeField] private Weapon _weapon;
         private AsteroidController _asteroidController;
 
 
@@ -23,6 +27,7 @@ namespace Asteroids
 
         private void Start()
         {
+            _weapon.ScoreSystem.OnPointsUpdate += _hud.SetScore;
             _ufo.OnCollision += () => StartCoroutine(StartUfoMoving());
             StartCoroutine(StartUfoMoving());
         }

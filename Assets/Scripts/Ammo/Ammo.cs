@@ -40,16 +40,15 @@ namespace Asteroids.Ammo
         {
             if (other.CompareTag(NamesManager.ASTEROID_TAG))
             {
-                OnTargetReached?.Invoke(transform);
                 OnTargetDestroyed?.Invoke(other.GetComponent<Asteroid>().asteroidType);
+                OnTargetReached?.Invoke(transform);
             }
             
             
             if (other.CompareTag(NamesManager.UFO_TAG))
             {
-                OnTargetReached?.Invoke(transform);
-                
                 OnTargetDestroyed?.Invoke(AsteroidType.None);
+                OnTargetReached?.Invoke(transform);
             }
         }
 
@@ -75,6 +74,8 @@ namespace Asteroids.Ammo
             _screenBorderSystem.SetObjectToStartingState();
             OnScreenBorder = null;
             OnTargetReached = null;
+            OnTargetDestroyed = null;
+
         }
 
         private void OnEnable()
