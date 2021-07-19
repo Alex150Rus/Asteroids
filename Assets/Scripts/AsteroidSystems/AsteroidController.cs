@@ -14,6 +14,16 @@ namespace Asteroids.AsteroidSystems
         private float _asteroidsSpeed;
         private long _timePassedSinceAllAsteroidsKilled;
 
+        private int _waitSecondsBetweenAsteroidWaves;
+        private float _angleOfNewAsteroids;
+
+        public AsteroidController(int waitSecondsBetweenAsteroidWaves, float angleOfNewAsteroids)
+        {
+            _waitSecondsBetweenAsteroidWaves = waitSecondsBetweenAsteroidWaves;
+            _angleOfNewAsteroids = angleOfNewAsteroids;
+
+        }
+
         public void Start()
         {
             _asteroidsPool = new AsteroidsPool(5, new AbstractAsteroidFactory());
@@ -52,16 +62,16 @@ namespace Asteroids.AsteroidSystems
             if (asteroid.asteroidType == AsteroidType.Big || asteroid.asteroidType == AsteroidType.Middle)
             {
                 var dir = asteroid.transform.up;
-                var newDir45 = Quaternion.Euler(0f, 0f, 45) * dir;
-                var newDir_45 = Quaternion.Euler(0f, 0f, -45) * dir;
+                var newDir = Quaternion.Euler(0f, 0f, _angleOfNewAsteroids) * dir;
+                var newDir_ = Quaternion.Euler(0f, 0f, -_angleOfNewAsteroids) * dir;
                 
 
                 for (int i = 0; i < 2; i++)
                 {
                     var aster = GetAsteroid(asteroid.asteroidType + 1);
                     if (i == 0)
-                        aster.Direction = newDir45;
-                    else aster.Direction = newDir_45;
+                        aster.Direction = newDir;
+                    else aster.Direction = newDir_;
                     
                     aster.transform.position = transform.position;
                     aster.Speed = asteroid.Speed;
@@ -76,13 +86,12 @@ namespace Asteroids.AsteroidSystems
 
         public void Execute()
         {
-            Debug.Log(_qtyOfAteroidsOnScene);
             if (_qtyOfAteroidsOnScene == 0)
             {
                 if (_timePassedSinceAllAsteroidsKilled == 0)
                     _timePassedSinceAllAsteroidsKilled = DateTimeOffset.Now.ToUnixTimeSeconds();
 
-                if (DateTimeOffset.Now.ToUnixTimeSeconds() - _timePassedSinceAllAsteroidsKilled >= 2)
+                if (DateTimeOffset.Now.ToUnixTimeSeconds() - _timePassedSinceAllAsteroidsKilled >= _waitSecondsBetweenAsteroidWaves)
                 {
                     _previousQtyOfAteroidsOnScene++;
                     for (int i = 0; i < _previousQtyOfAteroidsOnScene; i++)

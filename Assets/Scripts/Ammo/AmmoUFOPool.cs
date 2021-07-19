@@ -5,41 +5,41 @@ using UnityEngine;
 
 namespace Asteroids.Ammo
 {
-    public class AmmoPool
+    public class AmmoUFOPool
     {
-        private readonly Dictionary<string, HashSet<Ammo>> _ammoPool;
+        private readonly Dictionary<string, HashSet<AmmoUFO>> _ammoPool;
         private readonly int _capacityPool;
         private Transform _rootPool;
-        private IAmmoFactory _ammoFactory;
+        private IAmmoUFOFactory _ammoFactory;
 
 
-        public AmmoPool(int capacityPool, IAmmoFactory ammoFactory)
+        public AmmoUFOPool(int capacityPool, IAmmoUFOFactory ammoFactory)
         {
-            _ammoPool = new Dictionary<string, HashSet<Ammo>>();
+            _ammoPool = new Dictionary<string, HashSet<AmmoUFO>>();
             _capacityPool = capacityPool;
             if (!_rootPool)
             {
-                _rootPool = new GameObject(NameManager.POOL_AMMO).transform;
+                _rootPool = new GameObject(NameManager.POOL_AMMO_UFO).transform;
             }
 
             _ammoFactory = ammoFactory;
         }
 
-        public Ammo GetOneAmmo(AmmoType ammoType)
+        public AmmoUFO GetOneAmmo(AmmoType ammoType)
         {
-            Ammo result;
+            AmmoUFO result;
             result = GetAmmo(GetListAmmos(ammoType), ammoType);
             return result;
         }
 
-        private HashSet<Ammo> GetListAmmos(AmmoType ammoType)
+        private HashSet<AmmoUFO> GetListAmmos(AmmoType ammoType)
         {
             return _ammoPool.ContainsKey(ammoType.ToString())
                 ? _ammoPool[ammoType.ToString()]
-                : _ammoPool[ammoType.ToString()] = new HashSet<Ammo>();
+                : _ammoPool[ammoType.ToString()] = new HashSet<AmmoUFO>();
         }
 
-        private Ammo GetAmmo(HashSet<Ammo> ammos, AmmoType ammoType)
+        private AmmoUFO GetAmmo(HashSet<AmmoUFO> ammos, AmmoType ammoType)
         {
             var ammo = ammos.FirstOrDefault(a => !a.gameObject.activeSelf);
             if (ammo == null)

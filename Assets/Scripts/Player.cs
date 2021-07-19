@@ -8,6 +8,7 @@ using Asteroids.MoveSystems;
 using Asteroids.RotateSystems;
 using Asteroids.WeaponSystems;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Asteroids
 {
@@ -17,11 +18,18 @@ namespace Asteroids
         [SerializeField] private float _maxSpeed;
         [SerializeField] private float _rotationSpeed;
         [SerializeField] private float _acceleration;
+        [SerializeField] private float _unhurtableTime;
+        [SerializeField] private int _flickerFrequencyPerSecond; 
         [SerializeField] private Weapon _weapon;
         private IInput _input;
         private IMove _move;
         private IRotate _rotate;
         private PlayerScreenBorderWork _playerScreenBorderWork;
+        private bool isUnhurtable = true;
+        private SpriteRenderer _spriteRenderer;
+        private SpriteRenderer _spriteRendererWeapon;
+
+        public event Action OnCollision;
 
         private void Awake()
         {
@@ -32,9 +40,40 @@ namespace Asteroids
             var rigidBody = GetComponent<Rigidbody2D>();
             _move = new MovePhysicsWithInertia(rigidBody);
             _rotate = new RotateByPhysics(rigidBody);
-
             _playerScreenBorderWork = new PlayerScreenBorderWork();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _spriteRendererWeapon = _weapon.GetComponent<SpriteRenderer>();
+        }
 
+        private void Start()
+        {
+            StartCoroutine(UnHurtable());
+            StartCoroutine(Flick());
+        }
+        
+        private IEnumerator UnHurtable()
+        {
+            isUnhurtable = true;
+            yield return new WaitForSecondsRealtime(_unhurtableTime);
+            isUnhurtable = false;
+        }
+
+        private IEnumerator Flick()
+        {
+            var time = 1 / _flickerFrequencyPerSecond;
+            while (isUnhurtable)
+            {
+                _spriteRenderer.color = 
+                    new Color(_spriteRenderer.color.r, _spriteRenderer.color.g, _spriteRenderer.color.b, 0f);
+                _spriteRendererWeapon.color = 
+                    new Color(_spriteRendererWeapon.color.r, _spriteRendererWeapon.color.g, _spriteRendererWeapon.color.b, 0f);
+                yield return new WaitForSecondsRealtime(time);
+                _spriteRenderer.color = 
+                    new Color(_spriteRenderer.color.r, _spriteRenderer.color.g, _spriteRenderer.color.b, 1f);
+                _spriteRendererWeapon.color = 
+                    new Color(_spriteRendererWeapon.color.r, _spriteRendererWeapon.color.g, _spriteRendererWeapon.color.b, 1f);
+                yield return null;
+            }
         }
 
         private void Update()
@@ -56,13 +95,27 @@ namespace Asteroids
 
         private void Rotate(float torque, float y)
         {
-            _rotate.Rotate(torque * _rotationSpeed * Time.deltaTime);
+            _rotate.Rotate(-torque * _rotationSpeed * Time.deltaTime);
         }
 
         private void OnDisable()
         {
             _input.OnAxisChange -= Move;
             _input.OnAxisChange -= Rotate;
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if(!isUnhurtable) {
+                if (other.CompareTag(NamesManager.ASTEROID_TAG) || 
+                    other.CompareTag(NamesManager.UFO_TAG) ||
+                other.CompareTag(NamesManager.UFO_BULLET_TAG))
+                {
+                    OnCollision?.Invoke();
+                    gameObject.SetActive(false);
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
+            }
         }
     }
 }

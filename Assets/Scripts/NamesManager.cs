@@ -9,5 +9,7 @@ namespace Asteroids
         public const string AMMO_TAG = "Ammo";
         public const string UFO_TAG = "UFO";
         public const string ASTEROID_TAG = "Asteroid";
+        public const string UNTAGGED_TAG = "Untagged";
+        public const string UFO_BULLET_TAG = "UffoBullet";
     }
 }

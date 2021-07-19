@@ -1,5 +1,4 @@
 using System;
-using Asteroids.AsteroidSystems;
 using Asteroids.Common;
 using Asteroids.WeaponSystems;
 using UnityEngine;
@@ -8,23 +7,21 @@ using UnityEngine.Rendering;
 namespace Asteroids.Ammo
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class Ammo : MonoBehaviour, IAmmo
+    public class AmmoUFO : MonoBehaviour, IAmmo
     {
-        public event Action<Transform> OnScreenBorder;
-        public event Action<Transform> OnTargetReached;
-        public event Action<AsteroidType> OnTargetDestroyed;
         [SerializeField] private float _velocity;
 
         private Rigidbody2D _playerRigidBody;
-        private Transform _startingPoint;
+        private AmmoStartPointUFO _startingPoint;
         private Rigidbody2D _rigidbody;
         private ICompareDistanceWithScreenWidth _screenBorderSystem;
 
+        public event Action<Transform> OnScreenBorder;
 
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
-            _startingPoint = FindObjectOfType<AmmoStartingPoint>().transform;
+            _startingPoint = FindObjectOfType<AmmoStartPointUFO>();
             _playerRigidBody = FindObjectOfType<Player>().gameObject.GetComponent<Rigidbody2D>();
             _screenBorderSystem = new ScreenBorderSystem(transform);
         }
@@ -36,23 +33,6 @@ namespace Asteroids.Ammo
             _screenBorderSystem.ScreenBorderWork(transform);
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (other.CompareTag(NamesManager.ASTEROID_TAG))
-            {
-                OnTargetReached?.Invoke(transform);
-                OnTargetDestroyed?.Invoke(other.GetComponent<Asteroid>().asteroidType);
-            }
-            
-            
-            if (other.CompareTag(NamesManager.UFO_TAG))
-            {
-                OnTargetReached?.Invoke(transform);
-                
-                OnTargetDestroyed?.Invoke(AsteroidType.None);
-            }
-        }
-
         public void Fly()
         {
             gameObject.SetActive(true);
@@ -62,19 +42,18 @@ namespace Asteroids.Ammo
 
         private void MoveToStartingPoint()
         {
-            transform.position = _startingPoint.position;
+            transform.position = _startingPoint.transform.position;
         }
 
         private void AddVelocity()
         {
-            _rigidbody.velocity = _startingPoint.up * (_velocity + _playerRigidBody.velocity.magnitude);
+            _rigidbody.velocity =(_playerRigidBody.transform.position - _rigidbody.transform.position).normalized 
+                                 * (_velocity + _playerRigidBody.velocity.magnitude);
         }
 
         private void OnDisable()
         {
             _screenBorderSystem.SetObjectToStartingState();
-            OnScreenBorder = null;
-            OnTargetReached = null;
         }
 
         private void OnEnable()
