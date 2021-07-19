@@ -24,6 +24,7 @@ namespace Asteroids.WeaponSystems
                 var ammo = _ammoPool.GetOneAmmo(AmmoType.Green); 
                 ammo.Fly();
                 ammo.OnScreenBorder += _ammoPool.ReturnObjectToPool;
+                ammo.OnTargetReached += _ammoPool.ReturnObjectToPool;
             }
         }
     }

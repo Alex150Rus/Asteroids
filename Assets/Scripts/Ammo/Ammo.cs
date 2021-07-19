@@ -10,6 +10,7 @@ namespace Asteroids.Ammo
     public class Ammo : MonoBehaviour, IAmmo
     {
         public event Action<Transform> OnScreenBorder;
+        public event Action<Transform> OnTargetReached;
         [SerializeField] private float _velocity;
 
         private Rigidbody2D _playerRigidBody;
@@ -33,8 +34,12 @@ namespace Asteroids.Ammo
             _screenBorderSystem.ScreenBorderWork(transform);
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
+            if (other.CompareTag(NamesManager.ASTEROID_TAG))
+            {
+                OnTargetReached?.Invoke(transform);
+            }
         }
 
         public void Fly()
@@ -57,6 +62,8 @@ namespace Asteroids.Ammo
         private void OnDisable()
         {
             _screenBorderSystem.SetObjectToStartingState();
+            OnScreenBorder = null;
+            OnTargetReached = null;
         }
 
         private void OnEnable()

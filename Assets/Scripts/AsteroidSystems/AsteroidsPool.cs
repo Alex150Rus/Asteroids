@@ -68,9 +68,9 @@ namespace Asteroids.AsteroidSystems
         
         public void ReturnObjectToPool(Transform transform)
         {
+            transform.gameObject.SetActive(false);
             transform.localPosition = Vector3.zero;
             transform.localRotation = Quaternion.identity;
-            transform.gameObject.SetActive(false);
         }
 
         public void RemovePool()
