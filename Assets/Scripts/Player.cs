@@ -55,8 +55,11 @@ namespace Asteroids
         
         private IEnumerator UnHurtable()
         {
-            if (Time.timeScale == 0)
+            while (Time.timeScale == 0)
+            {
                 yield return null;
+            }
+
             isUnhurtable = true;
             yield return new WaitForSecondsRealtime(_unhurtableTime);
             isUnhurtable = false;
@@ -64,8 +67,11 @@ namespace Asteroids
 
         private IEnumerator Flick()
         {
-            if (Time.timeScale == 0)
+            while (Time.timeScale == 0)
+            {
                 yield return null;
+            }
+
             var time = 1 / _flickerFrequencyPerSecond;
             while (isUnhurtable)
             {
