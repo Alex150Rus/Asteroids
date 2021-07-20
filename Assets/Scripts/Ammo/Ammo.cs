@@ -40,7 +40,9 @@ namespace Asteroids.Ammo
         {
             if (other.CompareTag(NamesManager.ASTEROID_TAG))
             {
-                OnTargetDestroyed?.Invoke(other.GetComponent<Asteroid>().asteroidType);
+                var asteroidType = other.GetComponent<Asteroid>().asteroidType;
+                
+                OnTargetDestroyed?.Invoke(asteroidType);
                 OnTargetReached?.Invoke(transform);
             }
             

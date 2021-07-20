@@ -30,10 +30,7 @@ namespace Asteroids
         private bool isUnhurtable = true;
         private SpriteRenderer _spriteRenderer;
         private SpriteRenderer _spriteRendererWeapon;
-
-        public IInput Input => _input;
-
-        public event Action OnCollision;
+        private Sound _sound;
 
         private void Awake()
         {
@@ -47,6 +44,7 @@ namespace Asteroids
             _playerScreenBorderWork = new PlayerScreenBorderWork();
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _spriteRendererWeapon = _weapon.GetComponent<SpriteRenderer>();
+            _sound = GetComponent<Sound>();
         }
 
         private void Start()
@@ -57,6 +55,8 @@ namespace Asteroids
         
         private IEnumerator UnHurtable()
         {
+            if (Time.timeScale == 0)
+                yield return null;
             isUnhurtable = true;
             yield return new WaitForSecondsRealtime(_unhurtableTime);
             isUnhurtable = false;
@@ -64,6 +64,8 @@ namespace Asteroids
 
         private IEnumerator Flick()
         {
+            if (Time.timeScale == 0)
+                yield return null;
             var time = 1 / _flickerFrequencyPerSecond;
             while (isUnhurtable)
             {
@@ -93,6 +95,11 @@ namespace Asteroids
 
         private void Move (float horizontal, float vertical)
         {
+            if (vertical > 0)
+            {
+                _sound.PlayByIndex(0);
+            }
+            
             var deltaTime = Time.deltaTime;
             _move.Move(deltaTime, horizontal, vertical, _acceleration, _maxSpeed);
         }
@@ -115,7 +122,6 @@ namespace Asteroids
                     other.CompareTag(NamesManager.UFO_TAG) ||
                 other.CompareTag(NamesManager.UFO_BULLET_TAG))
                 {
-                    OnCollision?.Invoke();
                     gameObject.SetActive(false);
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }
