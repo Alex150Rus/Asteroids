@@ -11,5 +11,9 @@ namespace Asteroids
         public const string ASTEROID_TAG = "Asteroid";
         public const string UNTAGGED_TAG = "Untagged";
         public const string UFO_BULLET_TAG = "UffoBullet";
+        public const string CONTROL_KEYBOARD = "Управление: клавиатура";
+        public const string CONTROL_KEYBOARD_AND_MOUSE = "Управление: клавиатура + мышь";
+        public const string CONTROL_TYPE_KEY = "controlType";
+        public const string AXIS_MOUSE_X = "Mouse X";
     }
 }

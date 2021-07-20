@@ -23,7 +23,7 @@ namespace Asteroids.WeaponSystems
 
         public void Fire(bool commandReceived)
         {
-            if (commandReceived && _ammoCounter.IsProperTimeForFire())
+            if (commandReceived && _ammoCounter.IsProperTimeForFire() && Time.timeScale == 1)
             {
                 var ammo = _ammoPool.GetOneAmmo(AmmoType.Green); 
                 ammo.OnTargetDestroyed += _scoreSystem.AddPoints;

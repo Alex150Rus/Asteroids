@@ -10,7 +10,7 @@ namespace Asteroids.Input
         public InputAbstractFactory()
         {
             _keyboardInput = new InputKeyBoard();
-            _mouseAndKeyBoardInput = null;
+            _mouseAndKeyBoardInput = new MouseAndKeyBoardInput();
         }
 
         public IInput Create(InputType inputType)

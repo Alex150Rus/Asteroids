@@ -6,6 +6,7 @@ using Asteroids.Common;
 using Asteroids.Input;
 using Asteroids.MoveSystems;
 using Asteroids.RotateSystems;
+using Asteroids.UI;
 using Asteroids.WeaponSystems;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -21,6 +22,7 @@ namespace Asteroids
         [SerializeField] private float _unhurtableTime;
         [SerializeField] private int _flickerFrequencyPerSecond; 
         [SerializeField] private Weapon _weapon;
+        [SerializeField] private MainMenu _mainMenu;
         private IInput _input;
         private IMove _move;
         private IRotate _rotate;
@@ -29,14 +31,16 @@ namespace Asteroids
         private SpriteRenderer _spriteRenderer;
         private SpriteRenderer _spriteRendererWeapon;
 
+        public IInput Input => _input;
+
         public event Action OnCollision;
 
         private void Awake()
         {
-            _input = new InputAbstractFactory().Create(InputType.KeyBoard);
-            _input.OnAxisChange += Move;
-            _input.OnAxisChange += Rotate;
-            _input.OnKeyPressed += _weapon.Fire;
+            if(!PlayerPrefs.HasKey(NamesManager.CONTROL_TYPE_KEY))
+                PlayerPrefs.SetInt(NamesManager.CONTROL_TYPE_KEY, (int)InputType.KeyBoard);
+            _input = new InputAbstractFactory().Create((InputType)PlayerPrefs.GetInt(NamesManager.CONTROL_TYPE_KEY));
+            AddHandlersToInputEvents();
             var rigidBody = GetComponent<Rigidbody2D>();
             _move = new MovePhysicsWithInertia(rigidBody);
             _rotate = new RotateByPhysics(rigidBody);
@@ -116,6 +120,21 @@ namespace Asteroids
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }
             }
+        }
+
+        public void ChangeControlSchemeOnyTheFly()
+        {
+            _input.Dispose();
+            _input = new InputAbstractFactory().Create((InputType)PlayerPrefs.GetInt(NamesManager.CONTROL_TYPE_KEY));
+            AddHandlersToInputEvents();
+        }
+
+        private void AddHandlersToInputEvents()
+        {
+            _input.OnAxisChange += Move;
+            _input.OnAxisChange += Rotate;
+            _input.OnKeyPressed += _weapon.Fire;
+            _input.OnEscapeKeyPressed += _mainMenu.ToggleMenu;
         }
     }
 }
