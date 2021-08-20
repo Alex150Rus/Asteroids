@@ -10,6 +10,9 @@ namespace Asteroids.WeaponSystems
 {
     public class Weapon : MonoBehaviour
     {
+        [SerializeField] private Rigidbody2D _player;
+        [SerializeField] private Transform _ammoStartingPoint;
+        
         private IAmmoCounter _ammoCounter;
         private AmmoPool _ammoPool;
         private ScoreSystem _scoreSystem;
@@ -20,7 +23,7 @@ namespace Asteroids.WeaponSystems
         private void Awake()
         {
             _ammoCounter = new AmmoCounter(1);
-            _ammoPool = new AmmoPool(15, new AmmoFactory());
+            _ammoPool = new AmmoPool(15, new AmmoFactory(_player, _ammoStartingPoint));
             _scoreSystem = new ScoreSystem();
             _sound = GetComponent<Sound>();
         }

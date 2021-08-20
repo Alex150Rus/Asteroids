@@ -9,12 +9,14 @@ namespace Asteroids.WeaponSystems
     public class WeaponUFO : MonoBehaviour
     {
         [SerializeField] private int _intervalBetweenFire;
+        [SerializeField] private Rigidbody2D _player;
+        [SerializeField] private Transform _ammoStartingPoint;
         private AmmoPool _ammoPool;
         private long _lastShotTime;
 
         private void Awake()
         {
-            _ammoPool = new AmmoPool(5, new AmmoFactory());
+            _ammoPool = new AmmoPool(5, new AmmoFactory(_player, _ammoStartingPoint));
         }
 
         private void Update()

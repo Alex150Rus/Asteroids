@@ -98,6 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _intervalBetweenFire: 2
+  _player: {fileID: 1047791726603582239, guid: 56706cf8650da374eafc1c8cc1ed7e20, type: 3}
+  _ammoStartingPoint: {fileID: 8665693257046185891}
 --- !u!1 &8665693257046185948
 GameObject:
   m_ObjectHideFlags: 0

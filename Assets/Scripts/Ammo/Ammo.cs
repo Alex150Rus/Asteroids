@@ -13,11 +13,11 @@ namespace Asteroids.Ammo
         public event Action<Transform> OnScreenBorder;
         public event Action<Transform> OnTargetReached;
         public event Action<AsteroidType> OnTargetDestroyed;
-        [SerializeField] private float _velocity;
         public AmmoType ammoType;
+        public Rigidbody2D playerRigidBody;
+        public Transform startingPoint;
 
-        private Rigidbody2D _playerRigidBody;
-        private Transform _startingPoint;
+        [SerializeField] private float _velocity;
         private Rigidbody2D _rigidbody;
         private ICompareDistanceWithScreenWidth _screenBorderSystem;
 
@@ -25,8 +25,6 @@ namespace Asteroids.Ammo
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
-            _startingPoint = FindObjectOfType<AmmoStartingPoint>().transform;
-            _playerRigidBody = FindObjectOfType<Player>().gameObject.GetComponent<Rigidbody2D>();
             _screenBorderSystem = new ScreenBorderSystem(transform);
         }
 
@@ -64,7 +62,7 @@ namespace Asteroids.Ammo
 
         private void MoveToStartingPoint()
         {
-            transform.position = _startingPoint.position;
+            transform.position = startingPoint.position;
         }
 
         private void AddVelocity()
@@ -72,11 +70,11 @@ namespace Asteroids.Ammo
             switch (ammoType)
             {
                 case AmmoType.Green:
-                    _rigidbody.velocity = _startingPoint.up * (_velocity + _playerRigidBody.velocity.magnitude);
+                    _rigidbody.velocity = startingPoint.up * (_velocity + playerRigidBody.velocity.magnitude);
                     break;
                 case AmmoType.Red:
-                    _rigidbody.velocity =(_playerRigidBody.transform.position - _rigidbody.transform.position).normalized 
-                    * (_velocity + _playerRigidBody.velocity.magnitude);
+                    _rigidbody.velocity =(playerRigidBody.transform.position - _rigidbody.transform.position).normalized 
+                    * (_velocity + playerRigidBody.velocity.magnitude);
                     break;
                 default: throw new ArgumentOutOfRangeException();
             }

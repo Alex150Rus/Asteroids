@@ -134,6 +134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &275098938 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 1047791726603582239, guid: 56706cf8650da374eafc1c8cc1ed7e20, type: 3}
+  m_PrefabInstance: {fileID: 1056445450}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &364411055 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2159618647242944645, guid: f615fe705f90c7e4f9d04e2d3b91a1c2, type: 3}
@@ -163,6 +168,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8665693256880213002, guid: 06a97470dea88d34685d03e4a348ef2b, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 275098938}
     - target: {fileID: 8665693257046218970, guid: 06a97470dea88d34685d03e4a348ef2b, type: 3}
       propertyPath: m_Name
       value: UFO
@@ -481,6 +490,10 @@ PrefabInstance:
       propertyPath: _flickerFrequencyPerSecond
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1047791726815593124, guid: 56706cf8650da374eafc1c8cc1ed7e20, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 275098938}
     m_RemovedComponents:
     - {fileID: 1047791726815593127, guid: 56706cf8650da374eafc1c8cc1ed7e20, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 56706cf8650da374eafc1c8cc1ed7e20, type: 3}

@@ -8,10 +8,14 @@ namespace Asteroids.Ammo
     public sealed class AmmoFactory : IAmmoFactory
     {
         private readonly Dictionary<AmmoType, Ammo> _bullets;
+        private readonly Rigidbody2D _playerRigidBody;
+        private readonly Transform _startingPoint;
 
-        public AmmoFactory(int qtyOfBulletTypes = 1)
+        public AmmoFactory(Rigidbody2D playerRigidBody, Transform startingPoint, int qtyOfBulletTypes = 1)
         {
             _bullets = new Dictionary<AmmoType, Ammo>(qtyOfBulletTypes);
+            _playerRigidBody = playerRigidBody;
+            _startingPoint = startingPoint;
         }
         
         public Ammo Create(AmmoType type)
@@ -20,6 +24,8 @@ namespace Asteroids.Ammo
                 ? _bullets[type]
                 : _bullets[type] = Resources.Load<Ammo>(GetAmmoPrefabPath(type));
             ammo.ammoType = type;
+            ammo.playerRigidBody = _playerRigidBody;
+            ammo.startingPoint = _startingPoint;
             var ammoInstance = GameObject.Instantiate(ammo);
             return ammoInstance;
         }
