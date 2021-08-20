@@ -4,6 +4,6 @@ namespace Asteroids.Ammo
 {
     public interface IAmmoFactory
     {
-        public Ammo Create();
+        public Ammo Create(AmmoType type);
     }
 }

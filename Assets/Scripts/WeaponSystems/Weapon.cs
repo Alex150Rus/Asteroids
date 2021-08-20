@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Asteroids.Ammo;
 using Asteroids.AsteroidSystems;
+using Asteroids.Common;
 using UnityEngine;
 
 namespace Asteroids.WeaponSystems
 {
-    public class Weapon : MonoBehaviour, IFire
+    public class Weapon : MonoBehaviour
     {
         private IAmmoCounter _ammoCounter;
         private AmmoPool _ammoPool;

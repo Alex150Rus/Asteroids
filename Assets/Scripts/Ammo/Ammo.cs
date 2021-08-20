@@ -14,6 +14,7 @@ namespace Asteroids.Ammo
         public event Action<Transform> OnTargetReached;
         public event Action<AsteroidType> OnTargetDestroyed;
         [SerializeField] private float _velocity;
+        public AmmoType ammoType;
 
         private Rigidbody2D _playerRigidBody;
         private Transform _startingPoint;
@@ -68,7 +69,17 @@ namespace Asteroids.Ammo
 
         private void AddVelocity()
         {
-            _rigidbody.velocity = _startingPoint.up * (_velocity + _playerRigidBody.velocity.magnitude);
+            switch (ammoType)
+            {
+                case AmmoType.Green:
+                    _rigidbody.velocity = _startingPoint.up * (_velocity + _playerRigidBody.velocity.magnitude);
+                    break;
+                case AmmoType.Red:
+                    _rigidbody.velocity =(_playerRigidBody.transform.position - _rigidbody.transform.position).normalized 
+                    * (_velocity + _playerRigidBody.velocity.magnitude);
+                    break;
+                default: throw new ArgumentOutOfRangeException();
+            }
         }
 
         private void OnDisable()

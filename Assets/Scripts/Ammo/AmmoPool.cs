@@ -46,7 +46,7 @@ namespace Asteroids.Ammo
             {
                 for (var i = 0; i < _capacityPool; i++)
                 {
-                    var instantiate = _ammoFactory.Create();
+                    var instantiate = _ammoFactory.Create(ammoType);
                     ReturnToPool(instantiate.gameObject.transform);
                     ammos.Add(instantiate);
                 }

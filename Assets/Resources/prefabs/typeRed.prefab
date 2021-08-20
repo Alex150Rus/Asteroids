@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6179957408079220576}
   - component: {fileID: 7098796474166417002}
   - component: {fileID: -283630399323021138}
-  - component: {fileID: 904557424602037674}
+  - component: {fileID: 4799981894741560177}
   m_Layer: 0
   m_Name: typeRed
   m_TagString: UffoBullet
@@ -133,7 +133,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &904557424602037674
+--- !u!114 &4799981894741560177
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3915919902480029000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5ba431ffea94f2a90b18a1c11d22601, type: 3}
+  m_Script: {fileID: 11500000, guid: edad573ef70845a48c805b5d9df115be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _velocity: 1.25
