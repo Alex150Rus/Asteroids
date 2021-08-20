@@ -10,10 +10,10 @@ namespace Asteroids.AsteroidSystems
         private readonly Dictionary<string, HashSet<Asteroid>> _asteroidPool;
         private readonly int _capacityPool;
         private Transform _rootPool;
-        private IAbstractAsteroidFactory _abstractAsteroidFactory;
+        private AsteroidFactory _asteroidFactory;
 
 
-        public AsteroidsPool(int capacityPool, IAbstractAsteroidFactory abstractAsteroidFactory)
+        public AsteroidsPool(int capacityPool, AsteroidFactory asteroidFactory)
         {
             _asteroidPool = new Dictionary<string, HashSet<Asteroid>>();
             _capacityPool = capacityPool;
@@ -22,7 +22,7 @@ namespace Asteroids.AsteroidSystems
                 _rootPool = new GameObject(NameManager.POOL_ASTEROID).transform;
             }
 
-            _abstractAsteroidFactory = abstractAsteroidFactory;
+            _asteroidFactory = asteroidFactory;
         }
 
         public Asteroid GetOneAsteroid(AsteroidType asteroidType)
@@ -46,7 +46,7 @@ namespace Asteroids.AsteroidSystems
             {
                 for (var i = 0; i < _capacityPool; i++)
                 {
-                    var instantiate = _abstractAsteroidFactory.Create(asteroidType);
+                    var instantiate = _asteroidFactory.Create(asteroidType);
                     ReturnToPool(instantiate.gameObject.transform);
                     asteroids.Add(instantiate);
                 }

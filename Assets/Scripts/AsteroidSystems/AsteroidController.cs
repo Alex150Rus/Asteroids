@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Asteroids.Common;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -26,7 +27,7 @@ namespace Asteroids.AsteroidSystems
 
         public void Start()
         {
-            _asteroidsPool = new AsteroidsPool(5, new AbstractAsteroidFactory());
+            _asteroidsPool = new AsteroidsPool(5, new AsteroidFactory(NameManager.ASTEROID_TYPES_QTY));
             _previousQtyOfAteroidsOnScene = 2;
             for (int i = 0; i < _previousQtyOfAteroidsOnScene; i++)
             {

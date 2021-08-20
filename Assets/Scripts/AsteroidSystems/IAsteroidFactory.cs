@@ -2,6 +2,6 @@ namespace Asteroids.AsteroidSystems
 {
     public interface IAsteroidFactory
     {
-        public Asteroid Create();
+        public Asteroid Create(AsteroidType asteroidType);
     }
 }
